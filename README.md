@@ -6,7 +6,7 @@
 
 Site temático inspirado no universo de Rapunzel (Tangled), com foco em imersão visual, animações e ambientação do Reino de Corona.
 
-[🌐 Ver Projeto](https://ThauanneLuna//Enrolados) • [💻 GitHub](https://github.com/ThauanneLuna/Enrolados/)
+[🌐 Ver Projeto](https://Thauanneluna.github.io/Enrolados/) • [💻 GitHub](https://github.com/ThauanneLuna/Enrolados/)
 
 </div>
 
