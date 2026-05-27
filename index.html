@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enrolados — Um Reino de Luz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- CURSOR PERSONALIZADO -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ALTERNAR DIA/NOITE -->
+<button id="mode-toggle" onclick="toggleMode()">🌙 Noite</button>
+
+<!-- TELA DE ABERTURA -->
+<div id="splash">
+  <div class="splash-particles" id="splashParticles"></div>
+  <div class="splash-glow"></div>
+  <div class="splash-lantern">
+    <svg viewBox="0 0 48 64" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="lg1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFF0C0" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#D4A855" stop-opacity="0.3"/>
+        </radialGradient>
+      </defs>
+      <line x1="24" y1="0" x2="24" y2="8" stroke="#D4A855" stroke-width="1.5"/>
+      <rect x="16" y="8" width="16" height="4" rx="2" fill="#D4A855" opacity="0.8"/>
+      <path d="M10 12 L38 12 L42 52 L6 52 Z" fill="url(#lg1)" opacity="0.5"/>
+      <path d="M10 12 L38 12 L42 52 L6 52 Z" fill="none" stroke="#D4A855" stroke-width="1" opacity="0.6"/>
+      <rect x="6" y="52" width="36" height="4" rx="2" fill="#D4A855" opacity="0.7"/>
+      <ellipse cx="24" cy="32" rx="8" ry="10" fill="#FFF8DC" opacity="0.6"/>
+    </svg>
+  </div>
+  <div class="splash-logo">
+    <h1>Enrolados</h1>
+    <p>Um Reino de Luz</p>
+  </div>
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav" id="mainNav">
+  <a class="nav-logo" href="#hero">✦ Corona</a>
+  <ul class="nav-links">
+    <li><a href="#characters">Personagens</a></li>
+    <li><a href="#kingdom">Reino</a></li>
+    <li><a href="#soundtrack">Músicas</a></li>
+    <li><a href="#symbolism">Simbolismo</a></li>
+    <li><a href="#lantern-messages">Lanternas</a></li>
+    <li><a href="#about-kingdom">O Reino</a></li>
+  </ul>
+</nav>
+
+<!-- FUNDO AMBIENTE -->
+<div id="main-bg"></div>
+<canvas id="stars-canvas"></canvas>
+<div id="lanterns-container"></div>
+<div id="particles-container"></div>
+
+<!-- CONTEÚDO -->
+<div id="content">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <svg class="hero-castle" viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <path d="M380 400 L380 200 L360 200 L360 180 L340 180 L340 160 L320 160 L320 140 L310 140 L310 100 L315 80 L320 60 L325 40 L330 20 L335 10 L340 20 L345 40 L350 60 L355 80 L360 100 L360 120 L380 120 L380 100 L400 100 L400 80 L390 80 L390 60 L410 60 L410 80 L420 80 L420 100 L440 100 L440 80 L450 60 L460 80 L460 100 L480 100 L480 120 L500 120 L500 100 L500 80 L505 60 L510 40 L515 20 L520 10 L525 20 L530 40 L535 60 L540 80 L540 100 L550 100 L550 140 L540 140 L540 160 L520 160 L520 180 L500 180 L500 200 L480 200 L480 400Z" fill="white" opacity="0.4"/>
+      <rect x="200" y="300" width="160" height="100" fill="white" opacity="0.3"/>
+      <rect x="540" y="300" width="160" height="100" fill="white" opacity="0.3"/>
+      <path d="M100 400 L100 320 L200 320 L200 280 L360 280 L360 400Z" fill="white" opacity="0.2"/>
+      <path d="M540 280 L700 280 L700 320 L800 320 L800 400 L540 400Z" fill="white" opacity="0.2"/>
+    </svg>
+    <div class="hero-mist"></div>
+
+    <!-- Ovo de Páscoa: Pascal escondido -->
+    <div class="easter-egg" id="pascal-egg" style="bottom: 15%; left: 12%; font-size: 1.8rem; opacity:0.15;" title="Pascal está olhando! 🦎" onclick="easterEggFound('pascal')">🦎</div>
+
+    <p class="hero-eyebrow">Uma Jornada de Fã por</p>
+    <h1 class="hero-title">Enrolados</h1>
+    <p class="hero-subtitle">Onde cada sonho é uma lanterna<br>esperando iluminar o céu</p>
+    <p class="hero-quote">"Faz dezoito anos que fico olhando pela janela, sonhando com o que vou sentir quando aquelas luzes subirem no céu."</p>
+    <a href="#characters" class="btn-explore">Começar a Jornada</a>
+  </section>
+
+  <div class="golden-sep"></div>
+
+  <!-- LIVRO MÁGICO -->
+  <div class="section-wrapper" id="book-section">
+    <div class="section" style="max-width:800px; margin: 0 auto;">
+      <div class="section-title reveal">O Tomo de Corona</div>
+      <div class="section-divider reveal"><span></span><i>Capítulos</i><span></span></div>
+      <div class="book-wrapper reveal">
+        <div class="book">
+          <div class="book-cover">
+            <div class="book-cover-emblem">✦</div>
+            <div class="book-cover-title">Contos da Princesa Perdida</div>
+            <div class="book-cover-sub">A Crônica da Luz e da Liberdade</div>
+            <div class="book-chapters">
+              <div class="book-chapter" onclick="scrollToSection('characters')">
+                <div class="ch-num">I</div>
+                <div class="ch-title">Personagens</div>
+              </div>
+              <div class="book-chapter" onclick="scrollToSection('kingdom')">
+                <div class="ch-num">II</div>
+                <div class="ch-title">Reino de Corona</div>
+              </div>
+              <div class="book-chapter" onclick="scrollToSection('soundtrack')">
+                <div class="ch-num">III</div>
+                <div class="ch-title">Músicas</div>
+              </div>
+              <div class="book-chapter" onclick="scrollToSection('symbolism')">
+                <div class="ch-num">IV</div>
+                <div class="ch-title">Teorias e Simbolismo</div>
+              </div>
+              <div class="book-chapter" id="secrets-chapter" onclick="easterEggFound('tome')">
+                <div class="ch-num">V</div>
+                <div class="ch-title">Segredos Ocultos</div>
+              </div>
+              <div class="book-chapter" onclick="scrollToSection('lantern-messages')">
+                <div class="ch-num">VI</div>
+                <div class="ch-title">Mensagens nas Lanternas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="golden-sep"></div>
+
+<!-- PERSONAGENS -->
+<div class="section-wrapper" id="characters">
+  <div class="section">
+    <div class="section-title reveal">As Almas de Corona</div>
+    <div class="section-divider reveal">
+      <span></span><i>Personagens</i><span></span>
+    </div>
+
+    <div class="characters-grid">
+
+      <!-- RAPUNZEL -->
+      <div class="char-card reveal">
+        <div class="char-visual char-bg-rapunzel">
+          <img src="rapunzel.png" alt="Rapunzel" class="char-img">
+        </div>
+
+        <div class="char-info">
+          <div class="char-name">Rapunzel</div>
+          <div class="char-role">A Princesa Perdida</div>
+          <div class="char-quote">
+            "Esta é a história de como eu morri — mas não se preocupe, é na verdade uma história muito divertida."
+          </div>
+        </div>
+      </div>
+
+      <!-- EUGENE -->
+      <div class="char-card reveal">
+        <div class="char-visual char-bg-eugene">
+          <img src="josé.png" alt="Eugene Fitzherbert" class="char-img">
+        </div>
+
+        <div class="char-info">
+          <div class="char-name">José Bezerra/Flynn Rider</div>
+          <div class="char-role">Ladrão de Coração Bom</div>
+          <div class="char-quote">
+            "Eu poderia me acostumar com uma vista dessas. Pronto, já me acostumei."
+          </div>
+        </div>
+      </div>
+
+      <!-- PASCAL -->
+      <div class="char-card reveal">
+        <div class="char-visual char-bg-pascal">
+          <img src="pascal.png" alt="Pascal" class="char-img">
+        </div>
+
+        <div class="char-info">
+          <div class="char-name">Pascal</div>
+          <div class="char-role">O Companheiro Fiel</div>
+          <div class="char-quote">
+            Um laço silencioso que fala mais alto que qualquer palavra — verdadeira lealdade no menor dos corações.
+          </div>
+        </div>
+      </div>
+
+      <!-- MAXIMUS -->
+      <div class="char-card reveal">
+        <div class="char-visual char-bg-maximus">
+          <img src="maximus.png" alt="Maximus" class="char-img">
+        </div>
+
+        <div class="char-info">
+          <div class="char-name">Maximus</div>
+          <div class="char-role">O Corcel Nobre</div>
+          <div class="char-quote">
+            Mais nobre que qualquer cavaleiro — um cavalo com o espírito da justiça e o coração de um campeão.
+          </div>
+        </div>
+      </div>
+
+      <!-- GOTHEL -->
+      <div class="char-card reveal">
+        <div class="char-visual char-bg-gothel">
+          <img src="gothel.png" alt="Madre Gothel" class="char-img">
+        </div>
+
+        <div class="char-info">
+          <div class="char-name">Madre Gothel</div>
+          <div class="char-role">A Gaiola Dourada</div>
+          <div class="char-quote">
+            "Eu te amo mais." — Palavras que floresceram como flores e picaram como espinhos.
+          </div>
+        </div>
+      </div>
+
+      <!-- REI E RAINHA -->
+      <div class="char-card reveal">
+        <div class="char-visual char-bg-frederic">
+          <img src="reierainha.png" alt="Rei e Rainha" class="char-img">
+        </div>
+
+        <div class="char-info">
+          <div class="char-name">O Rei e a Rainha</div>
+          <div class="char-role">Governantes de Corona</div>
+          <div class="char-quote">
+            Dezoito anos de lanternas, dezoito anos de uma dor que nunca encontrou palavras — apenas luz.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <div class="golden-sep"></div>
+
+  <!-- REINO -->
+  <div class="section-wrapper" id="kingdom">
+    <div class="section">
+      <div class="section-title reveal">Reino de Corona</div>
+      <div class="section-divider reveal"><span></span><i>Lore e Terras</i><span></span></div>
+      <div class="map-container reveal">
+        <!-- Ovo de Páscoa: símbolo do sol escondido -->
+        <div class="easter-egg" style="position:absolute; top:15px; right:20px; font-size:1.2rem; opacity:0.08;" onclick="easterEggFound('sun')">☀</div>
+        <div class="map-locations">
+          <div class="map-location">
+            <div class="loc-icon">🏰</div>
+            <div class="loc-name">O Palácio Real</div>
+            <div class="loc-desc">Sede do reino, onde o emblema do sol vigia cada pedra e as lanternas sobem a cada ano no aniversário da princesa perdida.</div>
+          </div>
+          <div class="map-location">
+            <div class="loc-icon">🌿</div>
+            <div class="loc-name">A Torre Encantada</div>
+            <div class="loc-desc">Escondida além das bordas da floresta — um pilar solitário onde dezoito anos de sonhos foram guardados entre paredes pintadas.</div>
+          </div>
+          <div class="map-location">
+            <div class="loc-icon">🍺</div>
+            <div class="loc-name">O Patinho Aconchegante</div>
+            <div class="loc-desc">Onde rufiões e ladrões guardam seus sonhos sob punhos marcados — uma taverna que esconde os corações mais ternos do reino.</div>
+          </div>
+          <div class="map-location">
+            <div class="loc-icon">⛵</div>
+            <div class="loc-name">A Barragem e os Penhascos</div>
+            <div class="loc-desc">Onde o destino quase terminou em águas turbulentas — e onde o coração decidiu que o amor valia cada risco impossível.</div>
+          </div>
+          <div class="map-location">
+            <div class="loc-icon">🌸</div>
+            <div class="loc-name">A Praça da Vila</div>
+            <div class="loc-desc">Paralelepípedos e mastros, crianças e cores — os primeiros passos de Rapunzel num mundo que sempre foi seu para descobrir.</div>
+          </div>
+          <div class="map-location">
+            <div class="loc-icon">🌙</div>
+            <div class="loc-name">O Lago das Lanternas</div>
+            <div class="loc-desc">Onde o céu se tornou um espelho e mil desejos dourados subiram em silêncio — o momento mais belo na memória do reino.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="golden-sep"></div>
+
+  <!-- TRILHA SONORA -->
+  <div class="section-wrapper" id="soundtrack">
+    <div class="section">
+      <div class="section-title reveal">As Canções da Luz</div>
+      <div class="section-divider reveal"><span></span><i>Trilha Sonora</i><span></span></div>
+      <div class="player reveal">
+        <div class="player-emblem">𝄞</div>
+        <div class="player-title">Enrolados — Trilha Sonora Original</div>
+        <div class="player-artist">Alan Menken · Glenn Slater</div>
+        <ul class="track-list">
+          <li class="active" onclick="selectTrack(this)">
+            <span class="track-num">01</span>
+            <span class="track-name">Quando Começará Minha Vida</span>
+            <span class="track-dur">3:35</span>
+          </li>
+          <li onclick="selectTrack(this)">
+            <span class="track-num">02</span>
+            <span class="track-name">Quando Começará Minha Vida (Reprise)</span>
+            <span class="track-dur">0:55</span>
+          </li>
+          <li onclick="selectTrack(this)">
+            <span class="track-num">03</span>
+            <span class="track-name">Mãe Sabe Tudo</span>
+            <span class="track-dur">2:47</span>
+          </li>
+          <li onclick="selectTrack(this)">
+            <span class="track-num">04</span>
+            <span class="track-name">Eu Tenho um Sonho</span>
+            <span class="track-dur">3:10</span>
+          </li>
+          <li onclick="selectTrack(this)">
+            <span class="track-num">05</span>
+            <span class="track-name">Eu Vejo a Luz</span>
+            <span class="track-dur">3:30</span>
+          </li>
+          <li onclick="selectTrack(this)">
+            <span class="track-num">06</span>
+            <span class="track-name">Something That I Want</span>
+            <span class="track-dur">1:58</span>
+          </li>
+        </ul>
+        <p class="player-note">✦ A música é sua para descobrir — ouça na sua plataforma favorita ✦</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="golden-sep"></div>
+
+  <!-- SIMBOLISMO -->
+  <div class="section-wrapper" id="symbolism">
+    <div class="section">
+      <div class="section-title reveal">Luz, Sombra e Significado</div>
+      <div class="section-divider reveal"><span></span><i>Teorias e Simbolismo</i><span></span></div>
+      <div class="symbolism-grid">
+        <div class="symbol-card reveal">
+          <div class="symbol-icon">🕯️</div>
+          <div class="symbol-title">Luz como Libertação</div>
+          <div class="symbol-text">As lanternas não são apenas tradição — são dezoito anos de saudade não respondida tornada visível. A luz aqui se torna a linguagem de um reino que busca o seu eu perdido, assim como Rapunzel busca o dela.</div>
+        </div>
+        <div class="symbol-card reveal">
+          <div class="symbol-icon">🌀</div>
+          <div class="symbol-title">O Cabelo como Identidade</div>
+          <div class="symbol-text">O cabelo dourado de Rapunzel é ao mesmo tempo seu poder e sua prisão — símbolo do que os outros querem dela. Sua perda não representa derrota, mas libertação: ela não precisa mais de magia para ser extraordinária.</div>
+        </div>
+        <div class="symbol-card reveal">
+          <div class="symbol-icon">🌑</div>
+          <div class="symbol-title">A Torre e o Cativeiro Emocional</div>
+          <div class="symbol-text">A torre de Gothel representa prisões invisíveis — as construídas com medo disfarçado de amor. Muitos espectadores a reconhecem como um espelho de manipulação emocional e codependência que transcende os contos de fadas.</div>
+        </div>
+        <div class="symbol-card reveal">
+          <div class="symbol-icon">☀️</div>
+          <div class="symbol-title">O Emblema do Sol e a Identidade Verdadeira</div>
+          <div class="symbol-text">O sol de Corona aparece em todo lugar antes que Rapunzel conheça seu significado — tecido em sua arte, seus instintos, seus sonhos. Ela pintou seu destino sem saber que era dela.</div>
+        </div>
+        <div class="symbol-card reveal">
+          <div class="symbol-icon">🌸</div>
+          <div class="symbol-title">Sonhos e Autorrealização</div>
+          <div class="symbol-text">"Eu Tenho um Sonho" é o coração filosófico do filme — a ideia radical de que a vulnerabilidade e o anseio são universais. Os desejos ocultos dos rufiões ecoam uma verdade: todos, por mais feridos que sejam, carregam uma luz particular.</div>
+        </div>
+        <div class="symbol-card reveal">
+          <div class="symbol-icon">🪞</div>
+          <div class="symbol-title">O Espelho dos Espelhos</div>
+          <div class="symbol-text">A dualidade de Eugene/Flynn — ladrão e príncipe — reflete o próprio eu dividido de Rapunzel. Ambos aprendem que seu verdadeiro nome não é o que os outros lhes deram, mas o que o amor desperta de dentro.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="golden-sep"></div>
+
+  <!-- MENSAGENS NAS LANTERNAS -->
+  <div class="section-wrapper" id="lantern-messages">
+    <div class="message-sky" id="messageSky"></div>
+    <div style="position:relative; z-index:10; width:100%; text-align:center; padding: 6rem 2rem 3rem;">
+      <div class="section-title reveal">Mensagens nas Lanternas</div>
+      <div class="section-divider reveal"><span></span><i>Solte seu sonho para o céu</i><span></span></div>
+    </div>
+    <div class="message-form reveal">
+      <h3>Acenda uma Lanterna</h3>
+      <p class="form-sub">Escreva seu sonho e solte-o para o céu noturno</p>
+      <div class="form-field">
+        <label>Seu Nome</label>
+        <input type="text" id="lanternName" placeholder="Viajante de Corona..." maxlength="40">
+      </div>
+      <div class="form-field">
+        <label>Seu Sonho ou Desejo</label>
+        <textarea id="lanternMessage" rows="4" placeholder="Que sonho você carrega no coração...?" maxlength="140"></textarea>
+      </div>
+      <button class="btn-lantern" onclick="releaseLantern()">Soltar sua Lanterna ✦</button>
+    </div>
+  </div>
+
+  <div class="golden-sep"></div>
+
+  <!-- SOBRE O REINO -->
+  <div class="section-wrapper" id="about-kingdom">
+    <div class="section">
+      <div class="section-title reveal">As Crônicas deste Reino</div>
+      <div class="section-divider reveal"><span></span><i>Sobre</i><span></span></div>
+      <div class="kingdom-text">
+        <span class="kingdom-seal">✦</span>
+        <p class="reveal">Muito antes das lanternas subirem sobre as águas de Corona, existe um espaço tranquilo — uma torre de luz dourada — onde aqueles que amam esta história se reúnem para lembrar como se sentiram ao ver aquelas luzes pela primeira vez.</p>
+        <p class="reveal">Este não é apenas um site de fã. É uma carta escrita em tinta e luz das estrelas, um bilhete de amor a um filme que ensinou a uma geração que sonhos não são ingênuos — são as coisas mais corajosas que carregamos.</p>
+        <p class="reveal">Aqui, o mundo de Rapunzel, Eugene, Pascal e Maximus respira novamente. Cada lanterna nestas páginas foi acesa com intenção. Cada palavra foi escolhida com cuidado. Cada sombra existe apenas para fazer a luz brilhar mais forte.</p>
+        <p class="reveal" style="font-style:italic; color: var(--gold-light);">Bem-vindo, viajante. O reino estava esperando por você.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- RODAPÉ -->
+<footer>
+  <span class="footer-logo">✦ Um Reino de Luz ✦</span>
+  <p>Uma homenagem de fã a Enrolados (2010) · Disney<br>
+  Criado com amor, lanternas e a crença de que todo sonho merece subir<br>
+  <span style="font-size:0.75rem; opacity:0.5;">Este site é um trabalho de fã sem fins comerciais. Todos os personagens e história © Walt Disney Animation Studios.</span>
+  </p>
+</footer>
+
+<!-- NOTIFICAÇÃO DE OVO DE PÁSCOA -->
+<div id="egg-toast" style="
+  position:fixed; bottom: 2rem; left:50%; transform: translateX(-50%) translateY(100px);
+  background: linear-gradient(135deg, rgba(26,18,48,0.95), rgba(13,10,26,0.98));
+  border: 1px solid rgba(212,168,85,0.4);
+  border-radius: 12px; padding: 1rem 2rem;
+  font-family: 'Cormorant Garamond', serif; font-style:italic;
+  color: var(--gold-light); font-size: 1rem;
+  box-shadow: 0 0 40px var(--glow);
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 9999; text-align:center; pointer-events:none;
+  white-space: nowrap;
+">🎉 Easter Egg Encontrado!</div>
+
+<script src="script.js"></script>
+</body>
+</html>
