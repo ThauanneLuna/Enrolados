@@ -29,6 +29,18 @@ body {
   cursor: none;
 }
 
+/* ─── BARRA DE PROGRESSO ─── */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--lilac-deep), var(--gold), var(--gold-pale));
+  z-index: 9999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px var(--glow-strong);
+}
+
 /* ─── CURSOR PERSONALIZADO ─── */
 #cursor {
   position: fixed; top:0; left:0; width:10px; height:10px;
@@ -38,8 +50,12 @@ body {
   z-index: 10000;
   transform: translate(-50%,-50%);
   box-shadow: 0 0 12px 4px var(--glow-strong);
-  transition: transform 0.08s ease, opacity 0.2s;
+  transition: transform 0.08s ease, opacity 0.2s, width 0.15s, height 0.15s;
   mix-blend-mode: screen;
+}
+#cursor.cursor-hover {
+  width: 6px; height: 6px;
+  background: var(--gold-pale);
 }
 #cursor-ring {
   position: fixed; top:0; left:0; width:30px; height:30px;
@@ -48,7 +64,11 @@ body {
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%,-50%);
-  transition: transform 0.18s ease, width 0.2s, height 0.2s;
+  transition: transform 0.18s ease, width 0.25s cubic-bezier(0.175,0.885,0.32,1.275), height 0.25s cubic-bezier(0.175,0.885,0.32,1.275), border-color 0.2s;
+}
+#cursor-ring.cursor-hover {
+  width: 46px; height: 46px;
+  border-color: rgba(212,168,85,0.25);
 }
 .cursor-particle {
   position: fixed;
@@ -191,6 +211,11 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
   backdrop-filter: blur(20px);
   transition: all 0.4s;
 }
+.nav.scrolled {
+  background: rgba(8,6,15,0.92);
+  border-color: rgba(212,168,85,0.25);
+  padding: 0.7rem 3rem;
+}
 .nav-logo {
   font-family: 'Playfair Display', serif;
   font-size: 1.3rem;
@@ -219,6 +244,70 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
 }
 .nav-links a:hover { opacity: 1; color: var(--gold-light); }
 .nav-links a:hover::after { transform: scaleX(1); }
+
+/* ─── MENU HAMBURGUER MOBILE ─── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: none;
+  padding: 4px;
+  background: none;
+  border: none;
+  z-index: 900;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px; height: 1.5px;
+  background: var(--gold-light);
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: center;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(8,6,15,0.97);
+  backdrop-filter: blur(24px);
+  z-index: 790;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.nav-mobile-menu.open {
+  display: flex;
+  opacity: 1;
+  pointer-events: all;
+}
+.nav-mobile-menu a {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  color: var(--gold-light);
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease, color 0.2s;
+}
+.nav-mobile-menu.open a {
+  opacity: 1;
+  transform: translateY(0);
+}
+.nav-mobile-menu.open a:nth-child(1) { transition-delay: 0.05s; }
+.nav-mobile-menu.open a:nth-child(2) { transition-delay: 0.1s; }
+.nav-mobile-menu.open a:nth-child(3) { transition-delay: 0.15s; }
+.nav-mobile-menu.open a:nth-child(4) { transition-delay: 0.2s; }
+.nav-mobile-menu.open a:nth-child(5) { transition-delay: 0.25s; }
+.nav-mobile-menu.open a:nth-child(6) { transition-delay: 0.3s; }
+.nav-mobile-menu a:hover { color: var(--gold-pale); }
 
 /* ─── FUNDO PRINCIPAL ─── */
 #main-bg {
@@ -370,6 +459,46 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
 }
 .btn-explore:hover { border-color: var(--gold); box-shadow: 0 0 30px var(--glow), inset 0 0 20px rgba(212,168,85,0.05); color: var(--gold-pale); }
 .btn-explore:hover::before { transform: scaleX(1); }
+
+/* ─── SCROLL INDICATOR ─── */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: fadeUp 1s ease 2s forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.scroll-indicator span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(212,168,85,0.45);
+}
+.scroll-mouse {
+  width: 20px; height: 32px;
+  border: 1px solid rgba(212,168,85,0.3);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+.scroll-mouse::after {
+  content: '';
+  width: 3px; height: 7px;
+  background: var(--gold);
+  border-radius: 2px;
+  animation: scrollBob 1.8s ease-in-out infinite;
+}
+@keyframes scrollBob {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  80% { transform: translateY(8px); opacity: 0; }
+}
 
 @keyframes fadeUp {
   from { opacity:0; transform: translateY(20px); }
@@ -527,6 +656,20 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
     0 0 40px var(--glow);
 }
 
+/* Brilho de canto ao hover */
+.char-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(212,168,85,0.06) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+  border-radius: 16px;
+}
+.char-card:hover::after { opacity: 1; }
+
 .char-visual {
   height: 340px;
   overflow: hidden;
@@ -538,7 +681,6 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
   height: 100%;
   object-fit: cover;
   display: block;
-
   transition: transform 0.6s ease;
 }
 
@@ -550,7 +692,6 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
   content:'';
   position: absolute;
   inset: 0;
-
   background:
     linear-gradient(
       to top,
@@ -592,6 +733,10 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
   line-height: 1.6;
   border-left: 2px solid rgba(212,168,85,0.3);
   padding-left: 1rem;
+  transition: border-color 0.3s;
+}
+.char-card:hover .char-quote {
+  border-color: rgba(212,168,85,0.65);
 }
 
 /* ─── MAPA DO REINO ─── */
@@ -693,6 +838,17 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
 }
 .track-list li:hover { background: rgba(212,168,85,0.08); }
 .track-list li.active { background: rgba(212,168,85,0.12); color: var(--gold-light); }
+/* Indicador de faixa ativa */
+.track-list li.active .track-num::after {
+  content: '▶';
+  font-size: 0.6rem;
+  margin-left: 3px;
+  animation: pulseTrack 1.2s ease-in-out infinite;
+}
+@keyframes pulseTrack {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
 .track-num { font-style: italic; color: var(--lilac-soft); width: 1.5rem; font-size: 0.85rem; }
 .track-name { flex:1; }
 .track-dur { font-size: 0.8rem; color: rgba(245,237,216,0.4); }
@@ -728,7 +884,13 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
 }
 .symbol-card:hover { border-color: rgba(212,168,85,0.3); box-shadow: 0 0 40px var(--glow); }
 .symbol-card:hover::before { opacity:1; }
-.symbol-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.symbol-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.symbol-card:hover .symbol-icon { transform: scale(1.15) rotate(-5deg); }
 .symbol-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.3rem;
@@ -792,6 +954,38 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
   margin-bottom: 2rem;
   letter-spacing: 0.15em;
 }
+
+/* Contador de lanternas */
+.lantern-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.8rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: rgba(197,176,224,0.6);
+  letter-spacing: 0.15em;
+}
+.lantern-counter-num {
+  font-family: 'Playfair Display', serif;
+  font-style: normal;
+  font-size: 1.1rem;
+  color: var(--gold-light);
+  min-width: 2ch;
+  text-align: center;
+  transition: transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.lantern-counter-num.bump {
+  animation: counterBump 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+@keyframes counterBump {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.5); color: var(--gold-pale); }
+  100% { transform: scale(1); }
+}
+
 .form-field {
   margin-bottom: 1.5rem;
 }
@@ -821,6 +1015,19 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
   border-color: rgba(212,168,85,0.5);
   box-shadow: 0 0 20px var(--glow);
 }
+/* Char counter */
+.char-count {
+  text-align: right;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.75rem;
+  color: rgba(197,176,224,0.4);
+  margin-top: 0.3rem;
+  letter-spacing: 0.1em;
+  transition: color 0.3s;
+}
+.char-count.near-limit { color: rgba(212,168,85,0.7); }
+.char-count.at-limit { color: rgba(200,80,80,0.8); }
+
 .btn-lantern {
   width: 100%;
   background: linear-gradient(135deg, rgba(212,168,85,0.2), rgba(212,168,85,0.1));
@@ -834,8 +1041,22 @@ body.day-mode .book-page { background: linear-gradient(135deg, #FDF8EE 0%, #F5E8
   text-transform: uppercase;
   cursor: none;
   transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
 }
+.btn-lantern::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  background: rgba(212,168,85,0.15);
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+.btn-lantern:hover::after { width: 300px; height: 300px; }
 .btn-lantern:hover { background: linear-gradient(135deg, rgba(212,168,85,0.3), rgba(212,168,85,0.15)); box-shadow: 0 0 30px var(--glow); }
+.btn-lantern:active { transform: scale(0.98); }
 
 /* ─── SOBRE O REINO ─── */
 #about-kingdom {
@@ -894,6 +1115,15 @@ footer p {
   margin-bottom: 1rem;
   display: block;
 }
+/* Easter egg secreto no rodapé */
+.footer-egg {
+  display: inline-block;
+  opacity: 0.01;
+  transition: opacity 0.4s;
+  cursor: none;
+  font-size: 1rem;
+}
+.footer-egg:hover { opacity: 0.5; }
 
 /* ─── ANIMAÇÕES DE ROLAGEM ─── */
 .reveal {
@@ -904,6 +1134,23 @@ footer p {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Variações de reveal */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal-left.visible,
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* ─── SEPARADOR ─── */
@@ -920,14 +1167,55 @@ footer p {
   width: 100%;
 }
 
+/* ─── TOOLTIP SUAVE ─── */
+[data-tip] {
+  position: relative;
+}
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(26,18,48,0.95);
+  border: 1px solid rgba(212,168,85,0.2);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.78rem;
+  color: var(--gold-light);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 100;
+}
+[data-tip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* ─── RESPONSIVO ─── */
 @media (max-width: 768px) {
   .nav { padding: 0.8rem 1.5rem; }
   .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  #mode-toggle { top: 0.8rem; right: 4rem; font-size: 0.75rem; padding: 0.35rem 0.8rem; }
   .book-chapters { grid-template-columns: 1fr; }
   .player { padding: 2rem 1.5rem; }
   .message-form { padding: 2rem 1.5rem; }
   .section { padding: 4rem 1.5rem; }
+  .scroll-indicator { display: none; }
+  .char-visual { height: 260px; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: clamp(2.5rem, 12vw, 4rem); }
+  .section-title { font-size: clamp(1.6rem, 8vw, 2.5rem); }
+  .book-cover { padding: 2rem 1.5rem; min-height: 400px; }
+  .message-form { padding: 1.5rem 1rem; }
+  .player { padding: 1.5rem 1rem; }
 }
 
 /* ─── MELHORIAS DO MODO NOTURNO ─── */
@@ -935,3 +1223,15 @@ body:not(.day-mode) .stars-visible { display: block; }
 body.day-mode .stars-visible { display: none; }
 body.day-mode #lanterns-container { opacity: 0.3; }
 body.day-mode #particles-container { opacity: 0.2; }
+
+/* ─── REDUCED MOTION ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal, .reveal-left, .reveal-right {
+    opacity: 1;
+    transform: none;
+  }
+}
